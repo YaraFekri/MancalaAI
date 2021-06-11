@@ -35,3 +35,14 @@ def storeVerbose(i):
         num_of_nodes = 0
     except:
         print("Unable to write to file")
+        
+def delete_verbose():
+    # open file
+    f = open("verbose.txt", "w+")
+
+    # absolute file positioning
+    f.seek(0)
+
+    # to erase all data
+    f.truncate()
+    f.close
