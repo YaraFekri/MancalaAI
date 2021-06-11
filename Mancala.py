@@ -199,4 +199,44 @@ while True:
             print("Input must be 0 or 1.\n")
         elif loop1==0:
             break
+if resume==1:
+    if(path.exists("save.txt")):
+        with open('save.txt','rb') as f:
+            n,steal,diff=pickle.load(f)
+        Newgame = n
+        turn = 0
+        print('If the result is 0:With Stealing 1:Without Stealing\n',steal)
+        print('If the difficulty is 0:easy 1:medium 2:hard\n',diff)
+    else:
+        print("file does not exit")
+
+
+elif resume == 0:
+    while True:
+
+        try:
+            turn = input("Who do you want to start? 0=YOU, 1=BOT\n")
+            if turn.isdigit():
+                turn = int(turn)
+            else:
+                raise ValueError()
+            if turn == 0 or turn == 1:
+                break
+            raise ValueError()
+        except ValueError:
+            print("Input must be 0 or 1.\n")
+
+    while True:
+        try:
+            steal = input("Do you want stealing? 0=YES, 1=NO\n")
+            if steal.isdigit():
+                steal = int(steal)
+            else:
+                raise ValueError()
+            if steal == 0 or steal == 1:
+                break
+            raise ValueError()
+        except ValueError:
+            print("Input must be 0 or 1.\n")
+
 
