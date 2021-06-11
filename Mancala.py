@@ -163,4 +163,40 @@ def alphabeta(currentgame, depth, alpha, beta, MinorMax, steal):
                 verbose['levels'].append(depth)
                 break
         return v, move
+loop1=1
+Newgame = [0 for i in range(14)]
+for i in range(0, 6, 1): Newgame[i] = 4
+for i in range(7, 13, 1): Newgame[i] = 4
+delete_verbose()
+
+while True:
+    try:
+        resume = input("New game or Resume ? 0:Newgame, 1:Resume\n")
+        if resume.isdigit():
+            resume = int(resume)
+        else:
+            raise ValueError()
+        if resume==0:
+            break
+        if resume==1:
+            try:
+                if(path.exists("save.txt")):
+                    filesize = os.path.getsize("save.txt")            
+                    if filesize == 0:
+                        print("the file is empty")
+                        resume = input("Enter the value 0 for a new game \n")
+                    elif filesize!=0:
+                        break
+                else:
+                    raise ValueError()
+            except ValueError:
+                print("There is no saved game, you will now play a new game")
+                resume=0
+                loop1=0
+        raise ValueError()
+    except ValueError:
+        if loop1==1 and resume!=0 and resume!=1:
+            print("Input must be 0 or 1.\n")
+        elif loop1==0:
+            break
 
