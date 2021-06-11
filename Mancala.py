@@ -5,22 +5,8 @@ import os.path
 from os import path
 num_of_nodes = 0
 verbose = {'Maxdepth': 0, 'AverageBF': 0, 'NumofLeaf': 0, 'values': [], 'numofCut': 0, 'levels': []}
-def final(game):
-    if sum(game[0:6]) == 0:
-        game[13] += sum(game[7:13])
-        for i in range(14):
-            if (i != 13 and i != 6):
-                game[i] = 0
-        return 1
 
-    elif sum(game[7:13]) == 0:
-        game[6] += sum(game[0:6])
-        for i in range(14):
-            if (i != 13 and i != 6):
-                game[i] = 0
-        return 2
-    else:
-        return 0
+
 
 def printgame(game):
     for i in range(12, 6, -1):
@@ -34,17 +20,6 @@ def printgame(game):
         print('  ', game[i], '   ', end='')
     print('\n')
     
-def heuristic(game):
-    if final(game):
-        if game[13] > game[6]:
-            return 49
-        elif game[13] == game[6]:
-            return 0
-        else:
-            return -49
-    else:
-        return game[13] - game[6]
-
 def storeVerbose(i):
     try:
         global num_of_nodes
@@ -71,3 +46,29 @@ def delete_verbose():
     # to erase all data
     f.truncate()
     f.close
+    
+def movegame(borad_mancala, num_pit, stealing):
+    num_seed = 0
+    another_turn = False
+    num_pit_sent = num_pit
+    
+    if num_pit_sent < 6:
+        num_seed = borad_mancala[num_pit]
+        borad_mancala[num_pit] = 0
+        while (num_seed != 0):
+            num_pit += 1
+            num_pit = num_pit % 14
+            if num_pit == 13:
+                continue
+            borad_mancala[num_pit] += 1
+            num_seed -= 1
+            
+            if (borad_mancala[num_pit] == 1 and borad_mancala[
+                -num_pit + 12] != 0 and num_pit != 6 and num_seed == 0 and stealing == 0 and num_pit < 6):
+                
+                borad_mancala[6] += borad_mancala[num_pit] + borad_mancala[-num_pit + 12]
+                borad_mancala[num_pit] = 0
+                borad_mancala[-num_pit + 12] = 0
+                
+            if (num_pit == 6 and num_seed == 0):
+                another_turn = True
