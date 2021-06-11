@@ -72,3 +72,24 @@ def movegame(borad_mancala, num_pit, stealing):
                 
             if (num_pit == 6 and num_seed == 0):
                 another_turn = True
+    
+    if num_pit_sent > 6:
+        num_seed = borad_mancala[num_pit]
+        borad_mancala[num_pit] = 0
+        while (num_seed != 0):
+            num_pit += 1
+            num_pit = num_pit % 14
+            if num_pit == 6:
+                continue
+            borad_mancala[num_pit] += 1
+            num_seed -= 1
+            
+            if (borad_mancala[num_pit] == 1 and borad_mancala[
+                5 - (num_pit - 7)] != 0 and num_pit != 13 and num_seed == 0 and stealing == 0 and num_pit > 6):
+                borad_mancala[13] += borad_mancala[num_pit] + borad_mancala[5 - (num_pit - 7)]
+                borad_mancala[num_pit] = 0
+                borad_mancala[5 - (num_pit - 7)] = 0
+                
+            if (num_pit == 13 and num_seed == 0):
+                another_turn = True
+    return another_turn
