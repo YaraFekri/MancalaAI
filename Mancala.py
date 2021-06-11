@@ -119,3 +119,19 @@ def movegame(borad_mancala, num_pit, stealing):
             if (num_pit == 13 and num_seed == 0):
                 another_turn = True
     return another_turn
+
+def alphabeta(currentgame, depth, alpha, beta, MinorMax, steal):
+    global num_of_nodes
+    if depth == 0 or final(currentgame) != 0:
+        hursvalue = heuristic(currentgame)
+        verbose['NumofLeaf'] += 1
+        verbose['values'].append(hursvalue)
+        return hursvalue, -1
+    if MinorMax:
+        v = -1000
+        move = -1
+        for m in range(7, 13, 1):
+            num_of_nodes +=1
+            if currentgame[m] == 0: continue
+            a = currentgame[:]
+            minormax = movegame(a, m, steal)
