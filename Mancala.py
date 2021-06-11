@@ -135,3 +135,32 @@ def alphabeta(currentgame, depth, alpha, beta, MinorMax, steal):
             if currentgame[m] == 0: continue
             a = currentgame[:]
             minormax = movegame(a, m, steal)
+            newv, _ = alphabeta(a, depth - 1, alpha, beta, minormax, steal)
+            if v < newv:
+                move = m
+                v = newv
+            alpha = max(alpha, v)
+            if alpha >= beta:
+                verbose['numofCut'] += 1
+                verbose['levels'].append(depth)
+                break
+        return v, move
+    else:
+        v = 1000
+        move = -1
+        for n in range(0, 6, 1):
+            if currentgame[n] == 0: continue
+            a = currentgame[:]
+            minormax = movegame(a, n, steal);
+            num_of_nodes +=1
+            newv, _ = alphabeta(a, depth - 1, alpha, beta, not minormax, steal)
+            if v > newv:
+                move = n
+                v = newv
+            beta = min(beta, v)
+            if alpha >= beta:
+                verbose['numofCut'] += 1
+                verbose['levels'].append(depth)
+                break
+        return v, move
+
