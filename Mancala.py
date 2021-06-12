@@ -238,5 +238,56 @@ elif resume == 0:
             raise ValueError()
         except ValueError:
             print("Input must be 0 or 1.\n")
+    
+    while True:
+        try:
+            diff = input("Which difficulty level do you want? 0=easy, 1=medium, 2=hard\n")
+            if diff.isdigit():
+                diff = int(diff)
+                if diff == 0:
+                    depth = 4
+                elif diff == 1:
+                    depth = 8
+                elif diff == 2:
+                    depth = 12
+                verbose['Maxdepth'] = depth
+            else:
+                raise ValueError()
+            if diff == 0 or diff == 1 or diff == 2:
+                break
+            raise ValueError()
+        except ValueError:
+            print("Input must be 0 or 1 or 2.\n")
+            
+diff = int(diff)
+if diff == 0:
+    depth = 4
+elif diff == 1:
+    depth = 8
+elif diff == 2:
+    depth = 12
+verbose['Maxdepth'] = depth
 
+i = 1
+count = 2
+printgame(Newgame)
+while (True):
+    if final(Newgame):
+        whowon = Newgame[13] - Newgame[6]
+        break
+
+    while (turn == 1):
+        if final(Newgame):
+            whowon = Newgame[13] - Newgame[6]
+            break
+        print("MY TURN ")
+        _, k = alphabeta(Newgame, depth, -1000, 1000, True, steal)
+        print('I choose to move pit number ', k)
+        t = movegame(Newgame, k, steal)
+        printgame(Newgame)
+        storeVerbose(i)
+        i += 1
+        if (not t):
+            turn = 0
+            break
 
