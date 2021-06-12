@@ -290,4 +290,55 @@ while (True):
         if (not t):
             turn = 0
             break
+    
+    while (turn == 0):
+        if final(Newgame):
+            break
+        while (turn == 0):
+            try:
+                save = input("Do you want to save the game? 0:NO 1:YES.\n ")
+                if save.isdigit():
+                    save = int(save)
+                else:
+                    raise ValueError()
+                if save == 0 or save == 1:
+                    break
+                raise ValueError()
+            except ValueError:
+                print("Input must be 0 or 1.\n")
+        if save == 1:
+            with open("save.txt", "wb") as f:
+                pickle.dump([Newgame, steal, diff], f)
+            sys.exit()
+        else:
+            while (turn == 0):
+                try:
+                    h = input("YOUR TURN\nYou choose pit number:")
+                    if h.isdigit():
+                        h = int(h)
+                    else:
+                        raise ValueError()
+                    if h == 0 or h == 1 or h == 2 or h == 3 or h == 4 or h == 5:
+                        break
+                    raise ValueError()
+                except ValueError:
+                    print("You must choose one of your own pits")
+            if h > 5 or Newgame[h] == 0:
+                print('you can\'t play')
+                break
+            t = movegame(Newgame, h, steal)
+            printgame(Newgame)
+            if (not t):
+                turn = 1
+                break
+
+printgame(Newgame)
+if (whowon > 0):
+    print('I WIN. HA HA')
+elif (whowon < 0):
+    print('You won..')
+elif (whowon == 0):
+    print('Its a Tie')
+
+
 
